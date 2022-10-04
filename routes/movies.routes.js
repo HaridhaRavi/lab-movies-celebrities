@@ -37,9 +37,25 @@ router.get("/movies", (req,res,next) => {
         res.render("movies/movies",{movieFromDb})
     })
     .catch((error) => {
-         console.log("Error getting celebrities from DB",error)
+         console.log("Error getting movies from DB",error)
          next(error)
     })
+})
+
+//READ -Movie Details
+router.get("/movies/:id",(req,res,next)=>{
+    const movieID = req.params.id
+    Movie.findById(movieID)
+        .populate("cast")
+        .then((movieDetails)=>{
+           console.log(movieDetails)
+            res.render("movies/movie-details",movieDetails)
+        })
+        .catch((error) => {
+            console.log("Error getting movie details from DB",error)
+            next(error)
+       })
+
 })
 
 module.exports = router;
