@@ -4,15 +4,7 @@ const Celebrity = require("../models/Celebrity.model");
 
 //CREATE:display form
 router.get("/celebrities/create",(req,res,next)=>{
-    Celebrity.find()
-    .then((celebrityList) => {
-        console.log(celebrityList)
-        res.render("celebrities/new-celebrity",{celebrityList})
-    })
-    .catch((err) => {
-        console.log("Error getting Celebrities list from db",err)
-        next()
-    })
+        res.render("celebrities/new-celebrity")
     
 })
 
