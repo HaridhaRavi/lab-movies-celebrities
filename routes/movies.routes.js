@@ -58,4 +58,20 @@ router.get("/movies/:id",(req,res,next)=>{
 
 })
 
+
+//DELETE - to delete a movie
+router.post("/movies/:id/delete",(req,res,next)=>{
+    const movieID = req.params.id
+    Movie.findByIdAndRemove(movieID)
+        .then(()=>{
+            res.redirect("/movies")
+        })
+        .catch((error) => {
+            console.log("Error getting movie details from DB",error)
+            next(error)
+       })
+
+})
+
+
 module.exports = router;
