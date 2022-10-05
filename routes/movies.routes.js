@@ -99,7 +99,7 @@ router.post("/movies/:id/edit",(req,res,next)=>{
     const updateData = {title, genre, plot, cast}
     Movie.findByIdAndUpdate(movieID,updateData)
         .then(()=>{
-            res.redirect("/movies")
+            res.redirect(`/movies/${movieID}`)
         })
         .catch((error) => {
             console.log("Error getting movie details from DB",error)
