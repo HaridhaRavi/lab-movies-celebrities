@@ -73,5 +73,38 @@ router.post("/movies/:id/delete",(req,res,next)=>{
 
 })
 
+//UPDATE : Display data
+router.get("/movies/:id/edit",(req,res,next)=>{
+    let movieData;
+    Movie.findById(req.params.id)
+        .then((response) => {
+            movieData = response;
+            return Celebrity.find()
+        })
+        .then((celebrityInfo)=>{
+            console.log(movieData)
+            console.log(celebrityInfo)
+            res.render("movies/edit-movie", {moviesInfo: movieData,allCelebrities: celebrityInfo})
+        })
+        .catch(error =>{
+            console.log("error updating data",error)
+            next(error)
+        })
 
+})
+//UPDATE -process data
+router.post("/movies/:id/edit",(req,res,next)=>{
+    const movieID = req.params.id
+    const {title, genre, plot, cast} = req.body
+    const updateData = {title, genre, plot, cast}
+    Movie.findByIdAndUpdate(movieID,updateData)
+        .then(()=>{
+            res.redirect("/movies")
+        })
+        .catch((error) => {
+            console.log("Error getting movie details from DB",error)
+            next(error)
+       })
+
+})
 module.exports = router;
